@@ -179,6 +179,7 @@ const savingsPerMonth = 10000;
 const monthlySpendable = 11000;
 const dailyExpense = 160;
 const minBalance = 5000;
+const extraSavings = 2000; // new monthly savings on 5th
 
 // Bills per month
 function getBills(day){
@@ -205,6 +206,12 @@ currentDate.setDate(currentDate.getDate() + 1);
 
 while(currentDate <= today){
   let day = currentDate.getDate();
+
+  // extra savings on 5th starting March 2026
+  if(day === 5 && currentDate >= new Date("2026-03-05")){
+    totalSavings += extraSavings;
+    lockedMoney = minBalance + totalSavings;
+  }
 
   if(day === 1 && currentDate >= new Date("2026-02-01")){
     totalSavings += savingsPerMonth;
