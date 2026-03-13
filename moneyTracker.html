@@ -119,16 +119,6 @@
       font-weight: 500;
       font-size: 14px;
     }
-
-    @media (min-width: 768px) {
-      .card {
-        font-size: 16px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-    }
   </style>
 </head>
 
@@ -173,13 +163,15 @@
 </div>
 
 <script>
+
 // ===== CONSTANTS =====
 const salary = 21000;
 const savingsPerMonth = 10000;
 const monthlySpendable = 11000;
 const dailyExpense = 160;
 const minBalance = 5000;
-const extraSavings = 2000; // new monthly savings on 5th
+const extraSavings = 2000;
+const adjustment = 80; // fixed ₹80 purchase
 
 // Bills per month
 function getBills(day){
@@ -205,9 +197,9 @@ let currentDate = new Date(startDate);
 currentDate.setDate(currentDate.getDate() + 1);
 
 while(currentDate <= today){
+
   let day = currentDate.getDate();
 
-  // extra savings on 5th starting March 2026
   if(day === 5 && currentDate >= new Date("2026-03-05")){
     totalSavings += extraSavings;
     lockedMoney = minBalance + totalSavings;
@@ -228,6 +220,9 @@ while(currentDate <= today){
   currentDate.setDate(currentDate.getDate() + 1);
 }
 
+// APPLY ₹80 ADJUSTMENT
+remainingSpendable -= adjustment;
+
 let bankBalance = lockedMoney + remainingSpendable;
 
 document.getElementById("savings").innerText = totalSavings;
@@ -236,17 +231,21 @@ document.getElementById("spendable").innerText = Math.floor(remainingSpendable);
 
 function calculateExtra(){
   let actual = parseFloat(document.getElementById("actualInput").value);
+
   if(isNaN(actual)){
     document.getElementById("extraResult").innerText = "Please enter valid amount.";
     return;
   }
-  let safe = actual - bankBalance;  
+
+  let safe = actual - bankBalance;
+
   if(safe > 0){
     document.getElementById("extraResult").innerText = "You can safely spend ₹" + Math.floor(safe);
   } else {
     document.getElementById("extraResult").innerText = "You are below your expected balance by ₹" + Math.abs(Math.floor(safe));
   }
 }
+
 </script>
 
 </body>
