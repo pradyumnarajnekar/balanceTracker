@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Money Tracker</title>
+<title>Finance Dashboard</title>
 
 <style>
 :root{
@@ -189,8 +189,6 @@ font-weight:600;
 
 </div>
 
-<!-- Product Breakdown (REFERENCE ONLY) -->
-
 <div class="card">
 <div class="section-title">Product Breakdown (Reference Only)</div>
 
@@ -213,11 +211,6 @@ font-weight:600;
 <tr><th>Total Products</th><th>₹1440</th></tr>
 
 </table>
-</div>
-
-<div class="card">
-<div class="section-title">Shopping Info</div>
-<p>Products Budget Considered: ₹930</p>
 </div>
 
 </div>
@@ -262,6 +255,11 @@ table.appendChild(row);
 if(done) spent+=e.amount;
 });
 
+// ✅ ADD PAST DAYS DAILY EXPENSE
+let pastDays = day - 1;
+spent += pastDays * 160;
+
+// ✅ TODAY'S TRACKING
 let petrolDone=false;
 let lunchDone=false;
 
@@ -271,6 +269,7 @@ if(hour>12 || (hour==12 && minute>=30)) lunchDone=true;
 if(petrolDone) spent+=100;
 if(lunchDone) spent+=60;
 
+// UI daily table
 const dailyTable=document.getElementById("dailyTable");
 
 function addDaily(icon,className,time,name,amount){
