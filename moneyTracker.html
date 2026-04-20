@@ -175,20 +175,7 @@ font-weight:600;
 
 </div>
 
-<div class="card">
-<div class="section-title">Daily Expenses</div>
-
-<table id="dailyTable">
-<tr>
-<th></th>
-<th>Time</th>
-<th>Expense</th>
-<th>Amount</th>
-</tr>
-</table>
-
-</div>
-
+<!-- ✅ PRODUCT LIST (UNCHANGED) -->
 <div class="card">
 <div class="section-title">Product Breakdown (Reference Only)</div>
 
@@ -219,18 +206,18 @@ font-weight:600;
 
 const now=new Date();
 const day=now.getDate();
-const hour=now.getHours();
-const minute=now.getMinutes();
 
 document.getElementById("date").innerText=
 "Today: "+now.toLocaleString();
 
-const salary = 10000;
+// ✅ SETTINGS
+const salary = 11000;
 
+// ✅ EXPENSES
 const checkpoints=[
-{date:1,name:"Househelp",amount:3000},
+{date:1,name:"PG Rent",amount:8500},
 {date:1,name:"WiFi Bill",amount:710},
-{date:1,name:"Products Budget",amount:930},
+{date:10,name:"SIP",amount:1000},
 {date:12,name:"Mobile Bill",amount:360}
 ];
 
@@ -255,47 +242,14 @@ table.appendChild(row);
 if(done) spent+=e.amount;
 });
 
-// ✅ ADD PAST DAYS DAILY EXPENSE
-let pastDays = day - 1;
-spent += pastDays * 160;
-
-// ✅ TODAY'S TRACKING
-let petrolDone=false;
-let lunchDone=false;
-
-if(hour>7 || (hour==7 && minute>=30)) petrolDone=true;
-if(hour>12 || (hour==12 && minute>=30)) lunchDone=true;
-
-if(petrolDone) spent+=100;
-if(lunchDone) spent+=60;
-
-// UI daily table
-const dailyTable=document.getElementById("dailyTable");
-
-function addDaily(icon,className,time,name,amount){
-let row=document.createElement("tr");
-row.innerHTML=
-`<td class="status ${className}">${icon}</td>
-<td>${time}</td>
-<td>${name}</td>
-<td>₹${amount}</td>`;
-dailyTable.appendChild(row);
-}
-
-petrolDone
-?addDaily("✔","done","07:30","Petrol",100)
-:addDaily("⏱","upcoming","07:30","Petrol",100);
-
-lunchDone
-?addDaily("✔","done","12:30","Food",60)
-:addDaily("⏱","upcoming","12:30","Food",60);
-
+// ✅ FINAL BALANCE
 let remaining = salary - spent;
 
 document.getElementById("remaining").innerText="₹"+remaining;
 
 window.expected=remaining;
 
+// ✅ BALANCE CHECK
 function compare(){
 let actual=Number(document.getElementById("actual").value);
 let diff=actual-window.expected;
